@@ -5,6 +5,269 @@
   box-sizing: border-box;
 }
 
+:root{
+  --accent: #00ffff;
+  --accent-2: #7dfcfa;
+  --bg-1: #0f0f1f;
+  --bg-2: #050508;
+  --glass: rgba(10,10,30,0.72);
+  --muted: #9aa7b0;
+  --radius-lg: 16px;
+  --radius-sm: 8px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --ease: cubic-bezier(.2,.9,.3,1);
+  --max-width: 1200px;
+}
+
+/* -------------------------
+   Global Reset & Base
+   ------------------------- */
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; }
+body{
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(circle at 8% 10%, #0f0f1f 0%, #000 40%);
+  color: #fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  line-height:1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce){
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* Generic container */
+.container {
+  width: calc(100% - 10%);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Headings */
+h1,h2,h3{ font-weight: var(--fw-bold); margin-bottom:0.5rem; }
+h2{ font-size: clamp(1.6rem, 2.2vw, 2.5rem); color: var(--accent); }
+
+/* Links */
+a { color: var(--accent); text-decoration: none; transition: color .18s var(--ease); }
+a:hover, a:focus { color: var(--accent-2); outline: none; }
+
+/* Focus-visible */
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* -------------------------
+   NAVBAR (header)
+   ------------------------- */
+.navbar{
+  position: fixed;
+  top:0; left:0; right:0;
+  z-index:1100;
+  padding: 1rem 0;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(5,6,10,0.45), rgba(5,6,10,0.25));
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+/* inner container aligns content */
+.nav-inner {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  width: calc(100% - 8%);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Logo / brand block */
+.logo-container{
+  display:flex;
+  align-items:center;
+  gap:0.85rem;
+}
+
+/* Circular wrapper ensures any square logo appears circular */
+.logo-wrapper{
+  width:64px; height:64px;
+  border-radius: 50%;
+  padding:4px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  display:inline-grid;
+  place-items:center;
+  box-shadow: 0 6px 18px rgba(0,255,255,0.04), inset 0 0 18px rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,255,255,0.12);
+  flex-shrink:0;
+}
+
+/* the image will fill and be cropped by the wrapper */
+.logo{
+  width:100%; height:100%;
+  border-radius:50%;
+  object-fit: cover;
+  display:block;
+  -webkit-user-drag: none;
+}
+
+/* brand texts next to logo */
+.brand { display:flex; flex-direction:column; line-height:1; }
+.brand-link { font-size:1.05rem; font-weight:700; color:#fff; }
+.brand-email { font-size:0.75rem; color: var(--muted); text-decoration:none; margin-top:4px; }
+
+/* NAV links (desktop) */
+.nav {
+  display:block;
+}
+.nav-links{
+  display:flex;
+  gap:1.6rem;
+  align-items:center;
+  list-style:none;
+}
+.nav-links a {
+  font-weight: var(--fw-medium);
+  padding: 0.5rem 0.2rem;
+  color: var(--accent);
+  border-radius: 8px;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), color .12s;
+}
+.nav-links a:hover { transform: translateY(-3px); color: var(--accent-2); text-decoration:none; }
+
+/* small subtle indicator under active (optional) */
+.nav-links a.active {
+  box-shadow: 0 6px 20px rgba(0,255,255,0.06);
+}
+
+/* -------------------------
+   Responsive: Hamburger (checkbox hack)
+   ------------------------- */
+/* hide actual input */
+.nav-toggle { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+
+/* label styled as hamburger */
+.nav-toggle-label {
+  display:none; /* shown only on small screens */
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+}
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+  display:block;
+  width:28px; height:2px; border-radius:2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: transform .25s var(--ease), opacity .18s var(--ease);
+  position:relative;
+}
+.hamburger::before,
+.hamburger::after {
+  content:"";
+  position:absolute;
+  left:0;
+}
+.hamburger::before { top:-8px; }
+.hamburger::after  { top:8px; }
+
+/* when nav-toggle checked -> transform into X */
+.nav-toggle:checked + .nav-inner .nav-toggle-label .hamburger{
+  transform: rotate(45deg);
+}
+.nav-toggle:checked + .nav-inner .nav-toggle-label .hamburger::before{
+  transform: rotate(90deg) translateX(0);
+  top:0;
+}
+.nav-toggle:checked + .nav-inner .nav-toggle-label .hamburger::after{
+  opacity:0;
+}
+
+/* mobile nav overlay: starts hidden */
+@media (max-width: 880px){
+  .nav-links { flex-direction: column; gap:1.1rem; padding: 2rem; }
+  .nav { 
+    position: fixed;
+    inset: 72px 20px auto 20px; /* top offset under navbar */
+    right: 20px;
+    left: 20px;
+    background: linear-gradient(180deg, rgba(8,10,14,0.95), rgba(6,8,10,0.85));
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    transform-origin: top right;
+    transform: scale(.98) translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .28s var(--ease), opacity .22s var(--ease);
+  }
+
+  /* show hamburger */
+  .nav-toggle-label { display:block; }
+
+  /* place nav-toggle-label after nav-inner content using flex order */
+  .nav-toggle-label { order: 3; }
+
+  /* when checked, show nav */
+  .nav-toggle:checked + .nav-inner .nav {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-inner { gap:0.5rem; align-items:center; }
+
+  /* collapse brand email on small screens for space */
+  .brand-email { display:none; }
+}
+
+/* -------------------------
+   Small polish for navbar on scroll (optional style)
+   You can toggle class `scrolled` with JS to reduce navbar height
+   ------------------------- */
+.navbar.scrolled { padding: 0.5rem 0; background: linear-gradient(180deg, rgba(5,6,10,0.9), rgba(3,4,6,0.85)); }
+
+/* -------------------------
+   Hero adjustments to account for fixed navbar
+   ------------------------- */
+.hero {
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: calc(4rem + 2rem) 0 6rem; /* give breathing room under fixed header */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+/* -------------------------
+   Utilities & small helpers
+   ------------------------- */
+.btn {
+  display:inline-block; padding: .75rem 1.8rem; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color:#001;
+  font-weight:700; text-decoration:none;
+  box-shadow: 0 6px 22px rgba(0,255,255,0.06);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease);
+}
+.btn:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,255,255,0.08); }
+
+/* small screen typography scaling */
+@media (max-width:480px){
+  .brand-link { font-size: .95rem; }
+  .logo-wrapper { width:52px; height:52px; }
+  h2 { font-size: 1.4rem; }
+}
+
+
+
 body {
   font-family: "Poppins", sans-serif;
   background: radial-gradient(circle at top left, #0f0f1f, #000);

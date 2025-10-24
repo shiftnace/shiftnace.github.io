@@ -73,6 +73,19 @@ html, body {
 }
 .logo-wrapper:hover {
   transform: rotate(4deg) scale(1.05);
+
+.logo-wrapper img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.logo-wrapper:hover img {
+  transform: scale(1.1);
+}
+
+
 }
 .brand-link {
   font-size: 1.25rem;

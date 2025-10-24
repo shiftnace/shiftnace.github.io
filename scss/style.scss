@@ -1,0 +1,39 @@
+$accent: #00ffff;
+$bg-dark: #0f0f1f;
+$font: "Poppins", sans-serif;
+
+body {
+  font-family: $font;
+  background: radial-gradient(circle at top left, $bg-dark, #000);
+  color: #fff;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 30, 0.8);
+  backdrop-filter: blur(10px);
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid $accent;
+    }
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    a {
+      color: $accent;
+      text-decoration: none;
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}

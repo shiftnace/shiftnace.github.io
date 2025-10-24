@@ -67,9 +67,11 @@ html, body {
   gap: 0.8rem;
 }
 
+/* --- Logo --- */
 .logo-wrapper {
   width: 60px;
   height: 60px;
+  flex-shrink: 0;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -80,6 +82,7 @@ html, body {
 
 .logo-wrapper:hover {
   transform: rotate(4deg) scale(1.05);
+}
 
 .logo-wrapper img {
   width: 70%;
@@ -87,37 +90,40 @@ html, body {
   object-fit: contain;
   border-radius: 50%;
   transition: transform 0.4s ease;
+  display: block;
 }
 
 .logo-wrapper:hover img {
   transform: scale(1.1);
 }
 
+/* --- Brand --- */
 .brand {
   display: flex;
   flex-direction: column;
   justify-content: center;
   line-height: 1.2;
 }
-   
-}
+
 .brand-link {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-bright);
   letter-spacing: 0.5px;
 }
+
 .brand-email {
   color: var(--text-muted);
   font-size: 0.8rem;
 }
 
-/* --- Nav Links --- */
+/* --- Navigation --- */
 .nav-links {
   display: flex;
   list-style: none;
   gap: 2rem;
 }
+
 .nav-links a {
   color: var(--accent-cyan);
   text-decoration: none;
@@ -126,6 +132,7 @@ html, body {
   position: relative;
   transition: var(--transition);
 }
+
 .nav-links a::after {
   content: '';
   position: absolute;
@@ -136,13 +143,31 @@ html, body {
   background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
   transition: width 0.3s ease;
 }
+
 .nav-links a:hover::after {
   width: 100%;
 }
+
 .nav-links a:hover {
   color: #fff;
   text-shadow: 0 0 12px rgba(0, 238, 255, 0.7);
 }
+
+/* --- Mobile Nav --- */
+.nav-toggle {
+  display: none;
+}
+
+.nav-toggle-label {
+  display: none;
+}
+
+@media (max-width: 880px) {
+  .nav-toggle-label {
+    display: block;
+  }
+}
+
 
 /* --- Hero Section --- */
 .hero {
